@@ -135,10 +135,10 @@ export const profile = {
     },
   ],
   achievements: [
-    "Galloping Horse Award Ceremony Moment - SEC Rising Star (Huawei, 2025)",
-    "Galloping Horse Award - SEC Rising Star (Huawei, 2025)",
+    "Galloping Horse Award - Power Star Project Lead (Huawei, 2026)",
     "Galloping Horse Award - Best Insight Presentation (Huawei, 2025)",
-    "Performance-Based Compensation (PBC): Grade A (Huawei, 2024)",
+    "Galloping Horse Award - SEC Rising Star (Huawei, 2024)",
+    "Performance-Based Compensation (PBC): Grade A (Huawei, 2024H2, 2025H1)",
   ],
   research: [
     "2 peer-reviewed research publications in AI/ML and applied analytics.",

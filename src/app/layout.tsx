@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   description:
     "AI/ML Engineer and Data Analyst portfolio - machine learning, NLP, analytics engineering, and applied GenAI systems.",
   metadataBase: new URL("https://ahnaf-samin-portfolio.vercel.app"),
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

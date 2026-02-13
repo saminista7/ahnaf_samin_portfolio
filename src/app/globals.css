@@ -25,18 +25,9 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-@media (pointer: fine) {
-  html,
-  body,
-  a,
-  button,
-  input,
-  textarea,
-  select,
-  summary,
-  [role="button"] {
-    cursor: none !important;
-  }
+.custom-cursor-mode,
+.custom-cursor-mode * {
+  cursor: none !important;
 }
 
 a {

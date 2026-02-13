@@ -366,6 +366,7 @@ export function HomePage() {
   const [contactEmail, setContactEmail] = useState("");
   const [contactSubject, setContactSubject] = useState("");
   const [contactMessage, setContactMessage] = useState("");
+  const [contactSubmitState, setContactSubmitState] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const { scrollYProgress } = useScroll();
   const { scrollYProgress: heroScrollProgress } = useScroll({
     target: heroRef,
@@ -425,19 +426,41 @@ export function HomePage() {
     return () => clearTimeout(timer);
   }, []);
 
-  function handleEmailFormSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleEmailFormSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (contactSubmitState === "submitting") return;
+    setContactSubmitState("submitting");
 
     const subject = contactSubject.trim() || `Portfolio inquiry from ${contactName.trim() || "Website Visitor"}`;
-    const messageBody = [
-      `Name: ${contactName.trim() || "Not provided"}`,
-      `Email: ${contactEmail.trim() || "Not provided"}`,
-      "",
-      contactMessage.trim() || "Hello, I would like to discuss a project.",
-    ].join("\n");
+    const message = contactMessage.trim() || "Hello, I would like to discuss a project.";
 
-    const mailtoUrl = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(messageBody)}`;
-    window.location.href = mailtoUrl;
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${profile.email}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: contactName.trim() || "Website Visitor",
+          email: contactEmail.trim() || "no-reply@example.com",
+          subject,
+          message,
+          _captcha: "false",
+          _template: "table",
+        }),
+      });
+
+      if (!response.ok) throw new Error("Request failed");
+
+      setContactSubmitState("success");
+      setContactName("");
+      setContactEmail("");
+      setContactSubject("");
+      setContactMessage("");
+    } catch {
+      setContactSubmitState("error");
+    }
   }
 
   function renderHeroStatValue(value: string): ReactNode {
@@ -493,7 +516,7 @@ export function HomePage() {
   }
 
   return (
-    <main className="relative overflow-x-clip pb-20" onMouseMove={handleMouseMove}>
+    <main className="custom-cursor-mode relative overflow-x-clip pb-20" onMouseMove={handleMouseMove}>
       <IntroLoader visible={loading} />
       <motion.div style={{ scaleX }} className="scroll-progress" />
       <div className="noise-overlay" />
@@ -879,17 +902,20 @@ export function HomePage() {
                 <p key={achievement}>- {achievement}</p>
               ))}
             </div>
-            <div className="mt-6 overflow-hidden rounded-2xl border border-white/12 bg-white/[0.03]">
-              <Image
-                src="/images/awards/galloping-horse-award.png"
-                alt="Galloping Horse Award ceremony moment"
-                width={1600}
-                height={900}
-                className="h-auto w-full object-cover"
-              />
-              <p className="border-t border-white/10 px-4 py-3 text-xs text-white/70 md:text-sm">
-                Galloping Horse Award Ceremony - SEC Rising Star (Huawei, 2025)
-              </p>
+            <div className="mt-5 rounded-2xl border border-white/12 bg-white/[0.03] p-3 md:p-4">
+              <div className="grid items-center gap-3 md:grid-cols-[220px_1fr]">
+                <Image
+                  src="/images/awards/galloping-horse-award.png"
+                  alt="Galloping Horse Award ceremony moment"
+                  width={1600}
+                  height={900}
+                  className="h-36 w-full rounded-xl object-cover object-center md:h-32"
+                />
+                <div>
+                  <p className="text-xs font-semibold tracking-[0.08em] text-blue-100/85">Award Moment</p>
+                  <p className="mt-1 text-sm text-white/78">Galloping Horse Award Ceremony - SEC Rising Star (Huawei, 2025)</p>
+                </div>
+              </div>
             </div>
           </div>
         </Reveal>
@@ -1001,6 +1027,7 @@ export function HomePage() {
                     value={contactName}
                     onChange={(event) => setContactName(event.target.value)}
                     placeholder="Your Name"
+                    required
                     className="rounded-xl border border-white/20 bg-[#0a1022] px-3 py-2.5 text-sm text-white placeholder:text-white/45"
                   />
                   <input
@@ -1008,12 +1035,14 @@ export function HomePage() {
                     value={contactEmail}
                     onChange={(event) => setContactEmail(event.target.value)}
                     placeholder="Your Email"
+                    required
                     className="rounded-xl border border-white/20 bg-[#0a1022] px-3 py-2.5 text-sm text-white placeholder:text-white/45"
                   />
                   <input
                     value={contactSubject}
                     onChange={(event) => setContactSubject(event.target.value)}
                     placeholder="Subject"
+                    required
                     className="rounded-xl border border-white/20 bg-[#0a1022] px-3 py-2.5 text-sm text-white placeholder:text-white/45 md:col-span-2"
                   />
                   <textarea
@@ -1021,12 +1050,23 @@ export function HomePage() {
                     onChange={(event) => setContactMessage(event.target.value)}
                     placeholder="Write your project requirements..."
                     rows={5}
+                    required
                     className="rounded-xl border border-white/20 bg-[#0a1022] px-3 py-2.5 text-sm text-white placeholder:text-white/45 md:col-span-2"
                   />
                   <div className="flex items-center justify-between gap-3 md:col-span-2">
-                    <p className="text-xs text-white/55">Submitting opens your default email app with details prefilled.</p>
-                    <button type="submit" className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0a1022] transition hover:scale-[1.02]">
-                      Send via Email
+                    <p className="text-xs text-white/55">
+                      {contactSubmitState === "success"
+                        ? "Submitted successfully. Your message has been sent."
+                        : contactSubmitState === "error"
+                          ? "Submission failed. Please try again."
+                          : "Submit once and your message goes directly to inbox."}
+                    </p>
+                    <button
+                      type="submit"
+                      disabled={contactSubmitState === "submitting"}
+                      className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0a1022] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-70"
+                    >
+                      {contactSubmitState === "submitting" ? "Submitting..." : "Submit"}
                     </button>
                   </div>
                 </form>
