@@ -9,9 +9,9 @@ export const profile = {
   github: "https://github.com/saminista7",
   linkedin: "https://www.linkedin.com/in/ahnafsamin7/",
   heroStats: [
-    { label: "Production Role", value: "System Engineer @ Huawei" },
-    { label: "Delivery Focus", value: "Build fast, iterate with real metrics" },
-    { label: "Core Offer", value: "AI/ML, LLM workflows, analytics automation" },
+    { label: "Industry Experience", value: "System Engineer at Huawei Technologies Ltd." },
+    { label: "Delivery Approach", value: "Fast Iteration with Measurable Outcomes" },
+    { label: "Core Specialization", value: "AI/ML and LLM Workflow Automation" },
   ],
   services: [
     {
@@ -54,6 +54,14 @@ export const profile = {
   ],
   projects: [
     {
+      name: "ASR Evaluation and Inference System",
+      description:
+        "End-to-end full-stack ASR platform for Bangla and English speech with evaluation pipelines, API serving, and interactive web UI.",
+      tech: ["Python", "FastAPI", "Streamlit", "Whisper", "Docker", "MLflow"],
+      thumbnail: "/images/projects/asr_system.png",
+      link: "https://github.com/saminista7/asr-evaluation-system",
+    },
+    {
       name: "Autonomous Trading Agentic AI MVP",
       description:
         "Autonomous trading agent MVP that demonstrates agent orchestration, tool use, state handling, and explainable reasoning.",
@@ -66,7 +74,7 @@ export const profile = {
       description:
         "NLP pipeline for Bangla sarcasm and sentiment detection with emoji-aware feature engineering and machine learning baselines.",
       tech: ["Python", "NLP", "Sentiment Analysis", "Feature Engineering"],
-      thumbnail: "/images/projects/project-bangla-nlp.png",
+      thumbnail: "/images/projects/project-bangla-nlp.jpg",
       link: "https://github.com/saminista7/bangla-sarcasm-emoji-nlp",
     },
     {
@@ -94,20 +102,20 @@ export const profile = {
       link: "https://github.com/saminista7/e-ghatak-android-app",
     },
     {
-      name: "My Event Planner (Java)",
-      description:
-        "Object-oriented Java desktop app for event planning workflows with a JFrame-based interface.",
-      tech: ["Java", "OOP", "Desktop App", "GUI"],
-      thumbnail: "/images/projects/project-event-planner-java.png",
-      link: "https://github.com/saminista7/my_event_planner_java",
-    },
-    {
       name: "Surviving AUST Game",
       description:
         "2D academic game using C++ and OpenGL with level progression and obstacle-driven mechanics.",
       tech: ["C++", "OpenGL", "Game Development", "Academic Project"],
       thumbnail: "/images/projects/project-surviving-aust-game.png",
       link: "https://github.com/saminista7/surviving-aust-game",
+    },
+    {
+      name: "My Event Planner (Java)",
+      description:
+        "Object-oriented Java desktop app for event planning workflows with a JFrame-based interface.",
+      tech: ["Java", "OOP", "Desktop App", "GUI"],
+      thumbnail: "/images/projects/project-event-planner-java.png",
+      link: "https://github.com/saminista7/my_event_planner_java",
     },
     {
       name: "Responsive Travel Website",
@@ -127,6 +135,7 @@ export const profile = {
     },
   ],
   achievements: [
+    "Galloping Horse Award Ceremony Moment - SEC Rising Star (Huawei, 2025)",
     "Galloping Horse Award - SEC Rising Star (Huawei, 2025)",
     "Galloping Horse Award - Best Insight Presentation (Huawei, 2025)",
     "Performance-Based Compensation (PBC): Grade A (Huawei, 2024)",
