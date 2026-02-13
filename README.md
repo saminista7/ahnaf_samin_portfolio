@@ -13,7 +13,9 @@ Then open `http://localhost:3000`.
 
 ## Blog publishing
 
-Add a new markdown file in `content/blog`:
+Add a new markdown file in `content/blog`. You can use either full metadata or just content.
+
+### Option A (recommended): with metadata
 
 ```md
 ---
@@ -25,6 +27,22 @@ tags: ["ai", "career"]
 
 Your post content in markdown.
 ```
+
+### Option B (super quick): filename + content only
+
+Create `content/blog/blog1.md` (or `blog2.md`, etc.) and write:
+
+```md
+# My first post
+
+This is my new blog post.
+```
+
+Fallback behavior:
+- Title is generated from filename if missing (`blog1` -> `Blog1`)
+- Excerpt is auto-generated from content if missing
+- Date defaults to current time if missing
+- Tags default to empty list if missing
 
 The blog index and post page are generated automatically.
 
