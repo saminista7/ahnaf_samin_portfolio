@@ -421,9 +421,18 @@ export function HomePage() {
   const meshCombinedY = useTransform(() => meshShiftY.get() + meshScrollY.get());
   const meshCombinedX = useTransform(() => meshShiftX.get() + meshScrollX.get());
 
+  const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1400);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const m = window.matchMedia("(max-width: 767px)");
+    setIsMobile(m.matches);
+    const listener = () => setIsMobile(m.matches);
+    m.addEventListener("change", listener);
+    return () => m.removeEventListener("change", listener);
   }, []);
 
   async function handleEmailFormSubmit(event: FormEvent<HTMLFormElement>) {
@@ -552,23 +561,23 @@ export function HomePage() {
         </div>
       </header>
 
-      <section ref={heroRef} className="hero-grid relative isolate min-h-[88vh] pt-16 md:pt-20">
-        <motion.div style={{ x: blobShiftX, y: blobShiftY }} className="floating-blob blob-a" />
-        <motion.div style={{ x: blobShiftBX, y: blobShiftBY }} className="floating-blob blob-b" />
-        <motion.div style={{ x: blobShiftCX, y: blobShiftCY }} className="floating-blob blob-c" />
-        <motion.div style={{ x: meshCombinedX, y: meshCombinedY, scale: meshScrollScale, rotate: meshScrollRotate }} className="pointer-events-none absolute inset-0 origin-center">
+      <section ref={heroRef} className="hero-grid relative isolate min-h-0 pt-10 pb-8 md:min-h-[88vh] md:pt-20 md:pb-0">
+        <motion.div style={{ x: blobShiftX, y: blobShiftY }} className="floating-blob blob-a hidden md:block" />
+        <motion.div style={{ x: blobShiftBX, y: blobShiftBY }} className="floating-blob blob-b hidden md:block" />
+        <motion.div style={{ x: blobShiftCX, y: blobShiftCY }} className="floating-blob blob-c hidden md:block" />
+        <motion.div style={isMobile ? undefined : { x: meshCombinedX, y: meshCombinedY, scale: meshScrollScale, rotate: meshScrollRotate }} className="pointer-events-none absolute inset-0 origin-center">
           <Image
             src="/graphics/mesh-lines.svg"
             alt=""
             aria-hidden
             width={1400}
             height={900}
-            className="h-full w-full object-cover opacity-30"
+            className="h-full w-full object-cover opacity-20 md:opacity-30"
           />
         </motion.div>
         <motion.div
           style={{ x: meshSecondaryX, y: meshSecondaryY, rotate: meshSecondaryRotate, scale: 1.1 }}
-          className="pointer-events-none absolute inset-0 origin-center"
+          className="pointer-events-none absolute inset-0 origin-center hidden md:block"
         >
           <Image
             src="/graphics/mesh-lines.svg"
@@ -580,102 +589,128 @@ export function HomePage() {
           />
         </motion.div>
 
-        <div className="container-width relative z-10 grid items-end gap-12 pt-8 md:grid-cols-[1.1fr_0.9fr]">
-          <Reveal className="flex h-full min-h-[640px] flex-col">
-            <p className="mb-4 inline-flex items-center justify-center text-center rounded-full border border-blue-300/30 bg-blue-400/10 px-4 py-1 text-xs font-semibold tracking-wider text-blue-100/90">
+        <div className="container-width relative z-10 grid gap-8 pt-6 md:grid-cols-[1.1fr_0.9fr] md:items-end md:gap-12 md:pt-8">
+          <Reveal className="order-2 flex min-h-0 flex-col md:order-none md:min-h-[520px]">
+            <p className="mb-3 inline-flex items-center justify-center rounded-full border border-blue-300/30 bg-blue-400/10 px-3 py-1.5 text-center text-[10px] font-semibold leading-snug tracking-wider text-blue-100/90 sm:px-4 sm:py-1 sm:text-xs">
               OPEN FOR CLIENT WORK • UPWORK READY • GLOBAL REMOTE
             </p>
-            <h1 className="text-4xl font-bold leading-tight text-white md:text-6xl">
+            <h1 className="text-2xl font-bold leading-tight text-white sm:text-3xl md:text-4xl md:leading-tight lg:text-5xl xl:text-6xl">
               I build and deliver <span className="text-gradient-aurora">AI/ML systems that ship fast</span> and drive outcomes.
             </h1>
-            <p className="mt-5 max-w-2xl text-base text-white/80 md:text-lg">{profile.tagline}</p>
-            <div className="mt-4 overflow-hidden text-sm text-blue-100/85">
-              <motion.div
-                animate={{ y: [0, -28, -56, -84, 0] }}
-                transition={{ duration: 9, ease: "easeInOut", repeat: Infinity }}
-                className="h-7"
-              >
-                <p>Specialized in {tags[0]}</p>
-                <p>Specialized in {tags[1]}</p>
-                <p>Specialized in {tags[2]}</p>
-                <p>Specialized in {tags[3]}</p>
-              </motion.div>
+            <p className="mt-3 max-w-2xl text-sm text-white/80 sm:mt-4 md:mt-5 md:text-base lg:text-lg">{profile.tagline}</p>
+            <div className="mt-3 overflow-hidden text-xs text-blue-100/85 sm:mt-4 sm:text-sm">
+              {isMobile ? (
+                <p className="h-6 sm:h-7">Specialized in {tags[0]}</p>
+              ) : (
+                <motion.div
+                  animate={{ y: [0, -28, -56, -84, 0] }}
+                  transition={{ duration: 9, ease: "easeInOut", repeat: Infinity }}
+                  className="h-6 sm:h-7"
+                >
+                  <p>Specialized in {tags[0]}</p>
+                  <p>Specialized in {tags[1]}</p>
+                  <p>Specialized in {tags[2]}</p>
+                  <p>Specialized in {tags[3]}</p>
+                </motion.div>
+              )}
             </div>
-            <div className="mt-auto flex flex-wrap gap-3 pt-8">
+            <div className="mt-6 flex flex-wrap gap-2 sm:gap-3 md:mt-auto md:pt-8">
               <MagneticButton className="inline-flex">
                 <a
                   href="#projects"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-[#eef4ff] px-5 py-3 text-sm font-semibold !text-[#0a1022] transition duration-300 hover:-translate-y-0.5 hover:scale-[1.02]"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#eef4ff] px-4 py-2.5 text-xs font-semibold !text-[#0a1022] transition duration-300 hover:-translate-y-0.5 hover:scale-[1.02] sm:gap-2 sm:px-5 sm:py-3 sm:text-sm"
                   style={{ color: "#0a1022" }}
                 >
-                  Explore Work <ArrowRight size={16} className="text-[#0a1022]" />
+                  Explore Work <ArrowRight size={14} className="text-[#0a1022] sm:w-4 sm:h-4" />
                 </a>
               </MagneticButton>
               <MagneticButton className="inline-flex">
                 <Link
                   href="/blog"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-white/10"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/25 px-4 py-2.5 text-xs font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-white/10 sm:gap-2 sm:px-5 sm:py-3 sm:text-sm"
                 >
-                  Read Blog <BookOpen size={16} />
+                  Read Blog <BookOpen size={14} className="sm:w-4 sm:h-4" />
                 </Link>
               </MagneticButton>
               <MagneticButton className="inline-flex">
                 <a
                   href={`mailto:${profile.email}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-blue-300/35 bg-blue-400/10 px-5 py-3 text-sm font-semibold text-blue-100 transition duration-300 hover:-translate-y-0.5 hover:bg-blue-400/20"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-blue-300/35 bg-blue-400/10 px-4 py-2.5 text-xs font-semibold text-blue-100 transition duration-300 hover:-translate-y-0.5 hover:bg-blue-400/20 sm:gap-2 sm:px-5 sm:py-3 sm:text-sm"
                 >
-                  Contact for CV/Proposal <ArrowRight size={16} />
+                  Contact <ArrowRight size={14} className="sm:w-4 sm:h-4" />
                 </a>
               </MagneticButton>
             </div>
-            <p className="mt-4 text-sm text-white/70">
+            <p className="mt-3 text-xs text-white/70 sm:mt-4 sm:text-sm">
               Delivery promise: clear communication, clean implementation, and practical handover for your team.
             </p>
           </Reveal>
 
-          <Reveal delay={0.1}>
+          <Reveal delay={0.1} className="order-1 flex justify-center md:order-none md:block">
             <motion.div
               ref={portraitRef}
-              style={{ y: heroY, rotate: heroRotate, scale: portraitZoom }}
-              className="portrait-shell relative"
-              whileHover={{ rotate: 0, y: -4 }}
+              style={{
+                y: heroY,
+                rotate: isMobile ? 0 : heroRotate,
+                scale: portraitZoom,
+              }}
+              className="portrait-shell relative w-full max-w-[280px] md:max-w-none"
+              whileHover={isMobile ? undefined : { rotate: 0, y: -4 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
-              <motion.div
-                aria-hidden
-                style={{ opacity: portraitBackdropOpacity, scale: portraitBackdropScale, rotate: portraitBackdropRotate }}
-                className="pointer-events-none absolute -top-12 left-1/2 z-0 -translate-x-1/2 text-center"
-              >
-                <motion.span
-                  style={{ y: portraitBackdropTopY, x: portraitBackdropTopX }}
-                  className="block whitespace-nowrap text-[clamp(2.1rem,7.3vw,5.6rem)] font-black tracking-[0.16em] text-white/20 drop-shadow-[0_2px_10px_rgba(148,197,255,0.22)]"
+              {isMobile ? (
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute -top-8 left-1/2 z-0 -translate-x-1/2 text-center md:-top-12"
                 >
-                  AI
-                </motion.span>
-                <motion.span
-                  style={{ y: portraitBackdropBottomY, x: portraitBackdropBottomX }}
-                  className="block -mt-2 whitespace-nowrap text-[clamp(2.1rem,7.3vw,5.6rem)] font-black tracking-[0.16em] text-white/20 drop-shadow-[0_2px_10px_rgba(148,197,255,0.22)]"
+                  <span className="block whitespace-nowrap text-[1.75rem] font-black tracking-[0.12em] text-white/20 drop-shadow-[0_2px_10px_rgba(148,197,255,0.22)]">
+                    AI
+                  </span>
+                  <span className="-mt-1 block whitespace-nowrap text-[1.75rem] font-black tracking-[0.12em] text-white/20 drop-shadow-[0_2px_10px_rgba(148,197,255,0.22)]">
+                    ENGINEER
+                  </span>
+                </div>
+              ) : (
+                <motion.div
+                  aria-hidden
+                  style={{ opacity: portraitBackdropOpacity, scale: portraitBackdropScale, rotate: portraitBackdropRotate }}
+                  className="pointer-events-none absolute -top-8 left-1/2 z-0 -translate-x-1/2 text-center md:-top-12"
                 >
-                  ENGINEER
-                </motion.span>
-              </motion.div>
+                  <motion.span
+                    style={{ y: portraitBackdropTopY, x: portraitBackdropTopX }}
+                    className="block whitespace-nowrap text-[1.75rem] font-black tracking-[0.12em] text-white/20 drop-shadow-[0_2px_10px_rgba(148,197,255,0.22)] md:text-[clamp(2.1rem,7.3vw,5.6rem)] md:tracking-[0.16em]"
+                  >
+                    AI
+                  </motion.span>
+                  <motion.span
+                    style={{ y: portraitBackdropBottomY, x: portraitBackdropBottomX }}
+                    className="block -mt-1 whitespace-nowrap text-[1.75rem] font-black tracking-[0.12em] text-white/20 drop-shadow-[0_2px_10px_rgba(148,197,255,0.22)] md:-mt-2 md:text-[clamp(2.1rem,7.3vw,5.6rem)] md:tracking-[0.16em]"
+                  >
+                    ENGINEER
+                  </motion.span>
+                </motion.div>
+              )}
               <motion.div
-                style={{ y: portraitBubbleY, opacity: portraitBubbleOpacity }}
-                animate={{ y: [0, -3, 0] }}
+                style={isMobile ? undefined : { y: portraitBubbleY, opacity: portraitBubbleOpacity }}
+                animate={isMobile ? undefined : { y: [0, -3, 0] }}
                 transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
                 className="comment-bubble left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-[92%]"
               >
                 Shipping AI That Actually Works
               </motion.div>
               <motion.div
-                style={{ x: portraitFrameX, y: portraitFrameY }}
+                style={isMobile ? undefined : { x: portraitFrameX, y: portraitFrameY }}
                 className="portrait-blend relative z-10"
                 initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.24, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               >
                 <motion.div
-                  animate={{ x: [0, 2.6, 0, -2.6, 0], y: [0, -1.6, 0, 1.6, 0], rotate: [0, 0.35, 0, -0.35, 0] }}
+                  animate={
+                    isMobile
+                      ? { x: 0, y: 0, rotate: 0 }
+                      : { x: [0, 2.6, 0, -2.6, 0], y: [0, -1.6, 0, 1.6, 0], rotate: [0, 0.35, 0, -0.35, 0] }
+                  }
                   transition={{ duration: 7.2, repeat: Infinity, ease: "easeInOut" }}
                 >
                   <motion.div style={{ scale: cutoutScale, x: cutoutX, y: cutoutY }} className="portrait-cutout-wrap">
@@ -684,7 +719,7 @@ export function HomePage() {
                       alt="Ahnaf Samin"
                       width={900}
                       height={1200}
-                      className="h-[560px] w-full object-contain portrait-image-cutout"
+                      className="portrait-hero-image w-full object-contain"
                       quality={100}
                       priority
                     />
@@ -692,16 +727,16 @@ export function HomePage() {
                 </motion.div>
               </motion.div>
               <motion.div
-                style={{ scale: statsScale, y: statsY }}
+                style={isMobile ? undefined : { scale: statsScale, y: statsY }}
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.45, duration: 0.7, ease: "easeOut" }}
-                className="portrait-stats mt-4 origin-top grid grid-cols-1 gap-2 text-xs text-white/85 md:grid-cols-3"
+                transition={{ delay: isMobile ? 0.2 : 0.45, duration: 0.7, ease: "easeOut" }}
+                className="portrait-stats mt-3 origin-top grid grid-cols-1 gap-2 text-xs text-white/85 sm:mt-4 md:grid-cols-3"
               >
                 {profile.heroStats.map((stat) => (
-                  <div key={stat.label} className="rounded-lg border border-white/12 bg-[#070d1ae0] p-3 backdrop-blur-md">
-                    <p className="text-[15px] font-semibold leading-[1.28] text-white/95">{renderHeroStatValue(stat.value)}</p>
-                    <p className="mt-1 text-[11px] font-medium tracking-[0.02em] text-white/60">{stat.label}</p>
+                  <div key={stat.label} className="rounded-lg border border-white/12 bg-[#070d1ae0] p-2.5 backdrop-blur-md sm:p-3">
+                    <p className="text-[13px] font-semibold leading-[1.28] text-white/95 sm:text-[15px]">{renderHeroStatValue(stat.value)}</p>
+                    <p className="mt-0.5 text-[10px] font-medium tracking-[0.02em] text-white/60 sm:mt-1 sm:text-[11px]">{stat.label}</p>
                   </div>
                 ))}
               </motion.div>

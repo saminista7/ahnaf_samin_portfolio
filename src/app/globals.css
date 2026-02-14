@@ -125,6 +125,7 @@ a {
 .container-width {
   width: min(1120px, 92vw);
   margin-inline: auto;
+  padding-inline: clamp(12px, 4vw, 24px);
 }
 
 .aero-header {
@@ -140,11 +141,16 @@ a {
 
 .brand-wordmark {
   font-family: "Space Grotesk", "Inter", "Segoe UI", sans-serif;
-  font-size: 0.96rem;
-  letter-spacing: 0.24em;
+  font-size: clamp(0.75rem, 3.5vw, 0.96rem);
+  letter-spacing: 0.14em;
   font-weight: 700;
   color: rgba(237, 242, 255, 0.96);
   text-transform: uppercase;
+}
+@media (min-width: 640px) {
+  .brand-wordmark {
+    letter-spacing: 0.24em;
+  }
 }
 
 .nav-modern {
@@ -481,6 +487,28 @@ a {
   -webkit-mask-image: radial-gradient(circle at 50% 40%, #000 62%, transparent 97%);
   object-position: center 16%;
   filter: saturate(0.96) contrast(1.06) brightness(0.94);
+}
+
+.portrait-hero-image {
+  height: clamp(220px, 50vw, 560px);
+  object-position: center 85%;
+  filter:
+    drop-shadow(0 0 0 #f8fbff)
+    drop-shadow(1.8px 1.8px 0 #f8fbff)
+    drop-shadow(-1.8px -1.8px 0 #f8fbff)
+    drop-shadow(0 0 0 #111827)
+    drop-shadow(2.2px 2.2px 0 #111827)
+    drop-shadow(0 18px 30px rgba(0, 0, 0, 0.4));
+  image-rendering: auto;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+@media (min-width: 768px) {
+  .portrait-hero-image {
+    height: 560px;
+    object-position: center 90%;
+  }
 }
 
 .portrait-image-cutout {
