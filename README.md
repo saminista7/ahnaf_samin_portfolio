@@ -1,53 +1,38 @@
-# Ahnaf Samin Portfolio (2026)
+# Ahnaf Samin | Personal Portfolio
 
-Premium personal branding portfolio built with Next.js, Tailwind, Framer Motion, and markdown blog posts.
+My personal portfolio showcasing my work in AI engineering, machine learning, research, and software development.
 
-## Run locally
+## About Me
 
-```bash
-npm install
-npm run dev
-```
+I'm an AI Engineer with a background in computer science and systems engineering. My work spans applied AI, deep learning, natural language processing, and LLM based applications.
 
-Then open `http://localhost:3000`.
+I also conduct research in areas including medical image classification, cybersecurity, and Bengali natural language processing.
 
-## Blog publishing
+## Research & Publications
 
-Add a new markdown file in `content/blog`. You can use either full metadata or just content.
+- **PruDensNet:** Parameter efficient CNN architecture for brain tumour classification using MRI.
+- **SCADA Intrusion Detection:** Deep learning based intrusion detection using a CNN, Transformer, and BiGRU architecture.
+- **Bengali Sarcasm Detection:** Research on context aware sarcasm and offensive language detection, including the AUST Sarc dataset.
 
-### Option A (recommended): with metadata
+## Areas of Interest
 
-```md
+- Artificial Intelligence and Machine Learning
+- Deep Learning and Computer Vision
+- Natural Language Processing
+- Large Language Models and AI Agents
+- Cybersecurity and Anomaly Detection
+- Applied Research and AI Systems
+
+## Technology
+
+Python · PyTorch · FastAPI · Next.js · SQL · LangGraph
+
+## Repository
+
+This repository contains the source code for my personal portfolio, including my background, research publications, projects, and professional experience.
+
+**Explore the portfolio:** [Ahnaf Samin](https://github.com/saminista7/ahnaf_samin_portfolio)
+
 ---
-title: "Your title"
-excerpt: "Short summary"
-date: "2026-02-11"
-tags: ["ai", "career"]
----
 
-Your post content in markdown.
-```
-
-### Option B (super quick): filename + content only
-
-Create `content/blog/blog1.md` (or `blog2.md`, etc.) and write:
-
-```md
-# My first post
-
-This is my new blog post.
-```
-
-Fallback behavior:
-- Title is generated from filename if missing (`blog1` -> `Blog1`)
-- Excerpt is auto-generated from content if missing
-- Date defaults to current time if missing
-- Tags default to empty list if missing
-
-The blog index and post page are generated automatically.
-
-## Profile content update
-
-- Main profile/site content: `src/data/profile.ts`
-- Hero photo: `public/images/ahnaf-profile.jpg`
-- Resume/CV facts are already embedded into profile copy and sections.
+Feel free to explore the repository and connect with me about research or AI engineering.
