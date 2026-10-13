@@ -1,38 +1,28 @@
-# Ahnaf Samin | Personal Portfolio
+# Personal Portfolio
 
-My personal portfolio showcasing my work in AI engineering, machine learning, research, and software development.
+A personal portfolio website showcasing research publications, technical projects, professional experience, and selected work in AI engineering and software development.
 
-## About Me
+## Overview
 
-I'm an AI Engineer with a background in computer science and systems engineering. My work spans applied AI, deep learning, natural language processing, and LLM based applications.
+The portfolio brings together research contributions, practical AI applications, and software projects in one place. It provides an overview of projects, publications, technical interests, and professional experience.
 
-I also conduct research in areas including medical image classification, cybersecurity, and Bengali natural language processing.
+## Featured Areas
 
-## Research & Publications
+- **Research:** Published work in medical image classification, cybersecurity, and Bengali natural language processing.
+- **AI Engineering:** Projects involving machine learning, deep learning, LLMs, and AI agents.
+- **Software Development:** Practical applications and projects across backend and frontend development.
+- **Experience:** Professional background, technical skills, and academic achievements.
 
-- **PruDensNet:** Parameter efficient CNN architecture for brain tumour classification using MRI.
-- **SCADA Intrusion Detection:** Deep learning based intrusion detection using a CNN, Transformer, and BiGRU architecture.
-- **Bengali Sarcasm Detection:** Research on context aware sarcasm and offensive language detection, including the AUST Sarc dataset.
+## Tech Stack
 
-## Areas of Interest
-
-- Artificial Intelligence and Machine Learning
-- Deep Learning and Computer Vision
-- Natural Language Processing
-- Large Language Models and AI Agents
-- Cybersecurity and Anomaly Detection
-- Applied Research and AI Systems
-
-## Technology
-
-Python · PyTorch · FastAPI · Next.js · SQL · LangGraph
+Python · Machine Learning · Deep Learning · FastAPI · Next.js · SQL · LangGraph
 
 ## Repository
 
-This repository contains the source code for my personal portfolio, including my background, research publications, projects, and professional experience.
+This repository contains the source code for the portfolio website.
 
-**Explore the portfolio:** [Ahnaf Samin](https://github.com/saminista7/ahnaf_samin_portfolio)
+**GitHub:** [saminista7/ahnaf_samin_portfolio](https://github.com/saminista7/ahnaf_samin_portfolio)
 
 ---
 
-Feel free to explore the repository and connect with me about research or AI engineering.
+Topics: `portfolio` `personal-website` `developer-portfolio` `ai-engineering` `machine-learning` `research`
