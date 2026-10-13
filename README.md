@@ -21,7 +21,7 @@ Python · Machine Learning · Deep Learning · FastAPI · Next.js · SQL · Lang
 
 This repository contains the source code for the portfolio website.
 
-**GitHub:** [saminista7/ahnaf_samin_portfolio](https://github.com/saminista7/ahnaf_samin_portfolio)
+**Website:** [ahnaf_samin_portfolio](https://ahnaf-samin-portfolio.vercel.app/)
 
 ---
 
